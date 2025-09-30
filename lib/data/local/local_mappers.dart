@@ -136,7 +136,7 @@ InventoryTransactionRowsCompanion mapTransactionEntity(InventoryTransactionEntit
   );
 }
 
-SyncStatusEntity mapSyncStatusRow(SyncStatus row) {
+SyncStatusEntity mapSyncStatusRow(SyncStatusRow row) {
   return SyncStatusEntity(
     resource: SyncResourceX.fromValue(row.resource),
     lastSyncedAt: row.lastSyncedAt,

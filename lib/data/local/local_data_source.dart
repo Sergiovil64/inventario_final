@@ -22,6 +22,13 @@ class LocalInventoryDataSource {
     return rows.map(mapProductRow).toList();
   }
 
+  Future<List<ProductEntity>> getPendingProducts() async {
+    final query = _db.select(_db.productRows)
+      ..where((tbl) => tbl.pendingSync.equals(true));
+    final rows = await query.get();
+    return rows.map(mapProductRow).toList();
+  }
+
   Future<void> upsertProduct(ProductEntity entity) {
     return _db.into(_db.productRows).insert(
           mapProductEntity(entity),
@@ -29,13 +36,16 @@ class LocalInventoryDataSource {
         );
   }
 
-  Future<void> markProductsSynced(Iterable<String> ids, DateTime syncedAt) async {
+  Future<void> markProductsSynced(
+    Iterable<String> ids, {
+    DateTime? updatedAt,
+  }) async {
     if (ids.isEmpty) return;
     final update = _db.update(_db.productRows)
       ..where((tbl) => tbl.id.isIn(ids.toList()));
     await update.write(
       ProductRowsCompanion(
-        updatedAt: Value(syncedAt),
+        updatedAt: updatedAt != null ? Value(updatedAt) : const Value.absent(),
         pendingSync: const Value(false),
       ),
     );
@@ -53,6 +63,13 @@ class LocalInventoryDataSource {
     return rows.map(mapLocationRow).toList();
   }
 
+  Future<List<LocationEntity>> getPendingLocations() async {
+    final query = _db.select(_db.locationRows)
+      ..where((tbl) => tbl.pendingSync.equals(true));
+    final rows = await query.get();
+    return rows.map(mapLocationRow).toList();
+  }
+
   Future<void> upsertLocation(LocationEntity entity) {
     return _db.into(_db.locationRows).insert(
           mapLocationEntity(entity),
@@ -60,13 +77,16 @@ class LocalInventoryDataSource {
         );
   }
 
-  Future<void> markLocationsSynced(Iterable<String> ids, DateTime syncedAt) async {
+  Future<void> markLocationsSynced(
+    Iterable<String> ids, {
+    DateTime? updatedAt,
+  }) async {
     if (ids.isEmpty) return;
     final update = _db.update(_db.locationRows)
       ..where((tbl) => tbl.id.isIn(ids.toList()));
     await update.write(
       LocationRowsCompanion(
-        updatedAt: Value(syncedAt),
+        updatedAt: updatedAt != null ? Value(updatedAt) : const Value.absent(),
         pendingSync: const Value(false),
       ),
     );
@@ -84,6 +104,13 @@ class LocalInventoryDataSource {
     return rows.map(mapEmployeeRow).toList();
   }
 
+  Future<List<EmployeeEntity>> getPendingEmployees() async {
+    final query = _db.select(_db.employeeRows)
+      ..where((tbl) => tbl.pendingSync.equals(true));
+    final rows = await query.get();
+    return rows.map(mapEmployeeRow).toList();
+  }
+
   Future<void> upsertEmployee(EmployeeEntity entity) {
     return _db.into(_db.employeeRows).insert(
           mapEmployeeEntity(entity),
@@ -91,13 +118,16 @@ class LocalInventoryDataSource {
         );
   }
 
-  Future<void> markEmployeesSynced(Iterable<String> ids, DateTime syncedAt) async {
+  Future<void> markEmployeesSynced(
+    Iterable<String> ids, {
+    DateTime? updatedAt,
+  }) async {
     if (ids.isEmpty) return;
     final update = _db.update(_db.employeeRows)
       ..where((tbl) => tbl.id.isIn(ids.toList()));
     await update.write(
       EmployeeRowsCompanion(
-        updatedAt: Value(syncedAt),
+        updatedAt: updatedAt != null ? Value(updatedAt) : const Value.absent(),
         pendingSync: const Value(false),
       ),
     );
@@ -115,6 +145,13 @@ class LocalInventoryDataSource {
     return rows.map(mapSnapshotRow).toList();
   }
 
+  Future<List<InventorySnapshotEntity>> getPendingSnapshots() async {
+    final query = _db.select(_db.inventorySnapshotRows)
+      ..where((tbl) => tbl.pendingSync.equals(true));
+    final rows = await query.get();
+    return rows.map(mapSnapshotRow).toList();
+  }
+
   Future<void> upsertSnapshot(InventorySnapshotEntity entity) {
     return _db.into(_db.inventorySnapshotRows).insert(
           mapSnapshotEntity(entity),
@@ -122,13 +159,16 @@ class LocalInventoryDataSource {
         );
   }
 
-  Future<void> markSnapshotsSynced(Iterable<String> ids, DateTime syncedAt) async {
+  Future<void> markSnapshotsSynced(
+    Iterable<String> ids, {
+    DateTime? updatedAt,
+  }) async {
     if (ids.isEmpty) return;
     final update = _db.update(_db.inventorySnapshotRows)
       ..where((tbl) => tbl.id.isIn(ids.toList()));
     await update.write(
       InventorySnapshotRowsCompanion(
-        updatedAt: Value(syncedAt),
+        updatedAt: updatedAt != null ? Value(updatedAt) : const Value.absent(),
         pendingSync: const Value(false),
       ),
     );
@@ -146,21 +186,36 @@ class LocalInventoryDataSource {
     return rows.map(mapTransactionRow).toList();
   }
 
-  Future<void> insertTransaction(InventoryTransactionEntity entity) async {
+  Future<List<InventoryTransactionEntity>> getPendingTransactions() async {
+    final query = _db.select(_db.inventoryTransactionRows)
+      ..where((tbl) => tbl.pendingSync.equals(true));
+    final rows = await query.get();
+    return rows.map(mapTransactionRow).toList();
+  }
+
+  Future<void> upsertTransaction(
+    InventoryTransactionEntity entity, {
+    bool updateSnapshots = true,
+  }) async {
     await _db.into(_db.inventoryTransactionRows).insert(
           mapTransactionEntity(entity),
           mode: InsertMode.insertOrReplace,
         );
-    await _updateSnapshotForTransaction(entity);
+    if (updateSnapshots) {
+      await _updateSnapshotForTransaction(entity);
+    }
   }
 
-  Future<void> markTransactionsSynced(Iterable<String> ids, DateTime syncedAt) async {
+  Future<void> markTransactionsSynced(
+    Iterable<String> ids, {
+    DateTime? updatedAt,
+  }) async {
     if (ids.isEmpty) return;
     final update = _db.update(_db.inventoryTransactionRows)
       ..where((tbl) => tbl.id.isIn(ids.toList()));
     await update.write(
       InventoryTransactionRowsCompanion(
-        updatedAt: Value(syncedAt),
+        updatedAt: updatedAt != null ? Value(updatedAt) : const Value.absent(),
         pendingSync: const Value(false),
       ),
     );
@@ -185,9 +240,11 @@ class LocalInventoryDataSource {
       case TransactionType.purchase:
         if (entity.targetLocationId == null) return;
         await _incrementStock(entity.targetLocationId!, entity.productId, entity.quantity);
+        break;
       case TransactionType.sale:
         if (entity.sourceLocationId == null) return;
         await _incrementStock(entity.sourceLocationId!, entity.productId, -entity.quantity);
+        break;
       case TransactionType.transfer:
         if (entity.sourceLocationId != null) {
           await _incrementStock(entity.sourceLocationId!, entity.productId, -entity.quantity);
@@ -195,15 +252,18 @@ class LocalInventoryDataSource {
         if (entity.targetLocationId != null) {
           await _incrementStock(entity.targetLocationId!, entity.productId, entity.quantity);
         }
+        break;
       case TransactionType.adjustment:
         if (entity.targetLocationId == null) return;
         await _setStock(entity.targetLocationId!, entity.productId, entity.quantity);
+        break;
     }
   }
 
   Future<void> _incrementStock(String locationId, String productId, double delta) async {
     final query = _db.select(_db.inventorySnapshotRows)
-      ..where((tbl) => tbl.locationId.equals(locationId) & tbl.productId.equals(productId));
+      ..where((tbl) => tbl.locationId.equals(locationId))
+      ..where((tbl) => tbl.productId.equals(productId));
     final existing = await query.getSingleOrNull();
     final now = DateTime.now().toUtc();
     if (existing == null) {

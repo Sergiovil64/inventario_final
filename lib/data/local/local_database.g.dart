@@ -2706,7 +2706,7 @@ class InventoryTransactionRowsCompanion
 }
 
 class $SyncStatusesTable extends SyncStatuses
-    with TableInfo<$SyncStatusesTable, SyncStatuse> {
+    with TableInfo<$SyncStatusesTable, SyncStatusRow> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -2742,7 +2742,7 @@ class $SyncStatusesTable extends SyncStatuses
   static const String $name = 'sync_statuses';
   @override
   VerificationContext validateIntegrity(
-    Insertable<SyncStatuse> instance, {
+    Insertable<SyncStatusRow> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -2770,9 +2770,9 @@ class $SyncStatusesTable extends SyncStatuses
   @override
   Set<GeneratedColumn> get $primaryKey => {resource};
   @override
-  SyncStatuse map(Map<String, dynamic> data, {String? tablePrefix}) {
+  SyncStatusRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return SyncStatuse(
+    return SyncStatusRow(
       resource:
           attachedDatabase.typeMapping.read(
             DriftSqlType.string,
@@ -2791,10 +2791,10 @@ class $SyncStatusesTable extends SyncStatuses
   }
 }
 
-class SyncStatuse extends DataClass implements Insertable<SyncStatuse> {
+class SyncStatusRow extends DataClass implements Insertable<SyncStatusRow> {
   final String resource;
   final DateTime? lastSyncedAt;
-  const SyncStatuse({required this.resource, this.lastSyncedAt});
+  const SyncStatusRow({required this.resource, this.lastSyncedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2815,12 +2815,12 @@ class SyncStatuse extends DataClass implements Insertable<SyncStatuse> {
     );
   }
 
-  factory SyncStatuse.fromJson(
+  factory SyncStatusRow.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return SyncStatuse(
+    return SyncStatusRow(
       resource: serializer.fromJson<String>(json['resource']),
       lastSyncedAt: serializer.fromJson<DateTime?>(json['lastSyncedAt']),
     );
@@ -2834,15 +2834,15 @@ class SyncStatuse extends DataClass implements Insertable<SyncStatuse> {
     };
   }
 
-  SyncStatuse copyWith({
+  SyncStatusRow copyWith({
     String? resource,
     Value<DateTime?> lastSyncedAt = const Value.absent(),
-  }) => SyncStatuse(
+  }) => SyncStatusRow(
     resource: resource ?? this.resource,
     lastSyncedAt: lastSyncedAt.present ? lastSyncedAt.value : this.lastSyncedAt,
   );
-  SyncStatuse copyWithCompanion(SyncStatusesCompanion data) {
-    return SyncStatuse(
+  SyncStatusRow copyWithCompanion(SyncStatusesCompanion data) {
+    return SyncStatusRow(
       resource: data.resource.present ? data.resource.value : this.resource,
       lastSyncedAt:
           data.lastSyncedAt.present
@@ -2853,7 +2853,7 @@ class SyncStatuse extends DataClass implements Insertable<SyncStatuse> {
 
   @override
   String toString() {
-    return (StringBuffer('SyncStatuse(')
+    return (StringBuffer('SyncStatusRow(')
           ..write('resource: $resource, ')
           ..write('lastSyncedAt: $lastSyncedAt')
           ..write(')'))
@@ -2865,12 +2865,12 @@ class SyncStatuse extends DataClass implements Insertable<SyncStatuse> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is SyncStatuse &&
+      (other is SyncStatusRow &&
           other.resource == this.resource &&
           other.lastSyncedAt == this.lastSyncedAt);
 }
 
-class SyncStatusesCompanion extends UpdateCompanion<SyncStatuse> {
+class SyncStatusesCompanion extends UpdateCompanion<SyncStatusRow> {
   final Value<String> resource;
   final Value<DateTime?> lastSyncedAt;
   final Value<int> rowid;
@@ -2884,7 +2884,7 @@ class SyncStatusesCompanion extends UpdateCompanion<SyncStatuse> {
     this.lastSyncedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : resource = Value(resource);
-  static Insertable<SyncStatuse> custom({
+  static Insertable<SyncStatusRow> custom({
     Expression<String>? resource,
     Expression<DateTime>? lastSyncedAt,
     Expression<int>? rowid,
@@ -5943,17 +5943,17 @@ class $$SyncStatusesTableTableManager
         RootTableManager<
           _$LocalDatabase,
           $SyncStatusesTable,
-          SyncStatuse,
+          SyncStatusRow,
           $$SyncStatusesTableFilterComposer,
           $$SyncStatusesTableOrderingComposer,
           $$SyncStatusesTableAnnotationComposer,
           $$SyncStatusesTableCreateCompanionBuilder,
           $$SyncStatusesTableUpdateCompanionBuilder,
           (
-            SyncStatuse,
-            BaseReferences<_$LocalDatabase, $SyncStatusesTable, SyncStatuse>,
+            SyncStatusRow,
+            BaseReferences<_$LocalDatabase, $SyncStatusesTable, SyncStatusRow>,
           ),
-          SyncStatuse,
+          SyncStatusRow,
           PrefetchHooks Function()
         > {
   $$SyncStatusesTableTableManager(_$LocalDatabase db, $SyncStatusesTable table)
@@ -6007,17 +6007,17 @@ typedef $$SyncStatusesTableProcessedTableManager =
     ProcessedTableManager<
       _$LocalDatabase,
       $SyncStatusesTable,
-      SyncStatuse,
+      SyncStatusRow,
       $$SyncStatusesTableFilterComposer,
       $$SyncStatusesTableOrderingComposer,
       $$SyncStatusesTableAnnotationComposer,
       $$SyncStatusesTableCreateCompanionBuilder,
       $$SyncStatusesTableUpdateCompanionBuilder,
       (
-        SyncStatuse,
-        BaseReferences<_$LocalDatabase, $SyncStatusesTable, SyncStatuse>,
+        SyncStatusRow,
+        BaseReferences<_$LocalDatabase, $SyncStatusesTable, SyncStatusRow>,
       ),
-      SyncStatuse,
+      SyncStatusRow,
       PrefetchHooks Function()
     >;
 

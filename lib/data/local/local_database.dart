@@ -81,6 +81,7 @@ class InventoryTransactionRows extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+@DataClassName('SyncStatusRow')
 class SyncStatuses extends Table {
   TextColumn get resource => text()();
   DateTimeColumn get lastSyncedAt => dateTime().nullable()();
