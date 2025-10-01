@@ -1,4 +1,4 @@
-part of 'sync_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 enum SyncStatus { idle, inProgress, success, failure }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:inventario_final/bloc/inventory/inventory_overview_state.dart';
 import '../../../bloc/inventory/inventory_overview_bloc.dart';
 
 class ProductListScreen extends StatelessWidget {

@@ -1,4 +1,5 @@
-part of 'authentication_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:inventario_final/models/entities.dart';
 
 enum AuthenticationStatus { unknown, loading, authenticated, unauthenticated, failure }
 

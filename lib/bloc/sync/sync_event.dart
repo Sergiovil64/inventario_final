@@ -1,4 +1,5 @@
-part of 'sync_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 abstract class SyncEvent extends Equatable {
   const SyncEvent();

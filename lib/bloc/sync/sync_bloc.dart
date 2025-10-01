@@ -1,14 +1,11 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventario_final/bloc/sync/sync_event.dart';
+import 'package:inventario_final/bloc/sync/sync_state.dart';
+import 'package:inventario_final/data/repositories/inventory_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../data/repositories/inventory_repository.dart';
-
-part 'sync_event.dart';
-part 'sync_state.dart';
 
 class SyncBloc extends Bloc<SyncEvent, SyncState> {
   SyncBloc({

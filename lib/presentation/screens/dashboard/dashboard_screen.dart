@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventario_final/bloc/authentication/authentication_bloc.dart';
+import 'package:inventario_final/bloc/authentication/authentication_event.dart';
+import 'package:inventario_final/bloc/authentication/authentication_state.dart';
+import 'package:inventario_final/bloc/inventory/inventory_overview_bloc.dart';
+import 'package:inventario_final/bloc/sync/sync_bloc.dart';
+import 'package:inventario_final/bloc/sync/sync_event.dart';
+import 'package:inventario_final/bloc/inventory/inventory_overview_event.dart';
+import 'package:inventario_final/bloc/inventory/inventory_overview_state.dart';
+import 'package:inventario_final/data/repositories/inventory_repository.dart';
+import 'package:inventario_final/presentation/screens/auth/login_screen.dart';
+import 'package:inventario_final/presentation/screens/products/product_list_screen.dart';
+import 'package:inventario_final/presentation/screens/transactions/new_transaction_screen.dart';
+import 'package:inventario_final/presentation/widgets/inventory_summary_card.dart';
+import 'package:inventario_final/presentation/widgets/sync_status_banner.dart';
 
-import '../../../bloc/authentication/authentication_bloc.dart';
-import '../../../bloc/inventory/inventory_overview_bloc.dart';
-import '../../../bloc/sync/sync_bloc.dart';
-import '../../../data/repositories/inventory_repository.dart';
-import '../../widgets/inventory_summary_card.dart';
-import '../../widgets/sync_status_banner.dart';
-import '../auth/login_screen.dart';
-import '../products/product_list_screen.dart';
-import '../transactions/new_transaction_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});

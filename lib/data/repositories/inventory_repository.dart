@@ -1,9 +1,9 @@
 import 'dart:async';
+import 'package:inventario_final/data/local/local_data_source.dart';
+import 'package:inventario_final/data/remote/supabase_inventory_service.dart';
+import 'package:inventario_final/models/entities.dart';
+import 'package:inventario_final/models/enums.dart';
 
-import '../../models/entities.dart';
-import '../../models/enums.dart';
-import '../local/local_data_source.dart';
-import '../remote/supabase_inventory_service.dart';
 
 typedef ConnectionChecker = Future<bool> Function();
 

@@ -1,4 +1,6 @@
-part of 'transaction_form_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:inventario_final/models/entities.dart';
+import 'package:inventario_final/models/enums.dart';
 
 enum TransactionFormStatus { idle, loading, success, failure }
 

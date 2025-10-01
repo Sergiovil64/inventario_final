@@ -1,13 +1,10 @@
 import 'dart:async';
-
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventario_final/bloc/inventory/inventory_overview_event.dart';
+import 'package:inventario_final/bloc/inventory/inventory_overview_state.dart';
+import 'package:inventario_final/data/repositories/inventory_repository.dart';
+import 'package:inventario_final/models/entities.dart';
 
-import '../../models/entities.dart';
-import '../../data/repositories/inventory_repository.dart';
-
-part 'inventory_overview_event.dart';
-part 'inventory_overview_state.dart';
 
 class InventoryOverviewBloc
     extends Bloc<InventoryOverviewEvent, InventoryOverviewState> {

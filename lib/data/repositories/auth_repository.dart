@@ -1,6 +1,6 @@
-import '../local/local_data_source.dart';
-import '../remote/supabase_auth_service.dart';
-import '../../models/entities.dart';
+import 'package:inventario_final/data/local/local_data_source.dart';
+import 'package:inventario_final/data/remote/supabase_auth_service.dart';
+import 'package:inventario_final/models/entities.dart';
 
 class AuthRepository {
   AuthRepository({

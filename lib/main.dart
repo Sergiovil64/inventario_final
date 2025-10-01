@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'bloc/app_bloc_observer.dart';
-import 'bloc/authentication/authentication_bloc.dart';
-import 'bloc/sync/sync_bloc.dart';
-import 'config/supabase_config.dart';
-import 'data/local/local_data_source.dart';
-import 'data/local/local_database.dart';
-import 'data/remote/supabase_auth_service.dart';
-import 'data/repositories/auth_repository.dart';
-import 'data/repositories/inventory_repository.dart';
-import 'presentation/router/app_router.dart';
-import 'presentation/screens/dashboard/dashboard_screen.dart';
+import 'package:inventario_final/bloc/app_bloc_observer.dart';
+import 'package:inventario_final/bloc/authentication/authentication_bloc.dart';
+import 'package:inventario_final/bloc/authentication/authentication_event.dart';
+import 'package:inventario_final/bloc/sync/sync_bloc.dart';
+import 'package:inventario_final/bloc/sync/sync_event.dart';
+import 'package:inventario_final/config/supabase_config.dart';
+import 'package:inventario_final/data/local/local_data_source.dart';
+import 'package:inventario_final/data/local/local_database.dart';
+import 'package:inventario_final/data/remote/supabase_auth_service.dart';
+import 'package:inventario_final/data/repositories/auth_repository.dart';
+import 'package:inventario_final/data/repositories/inventory_repository.dart';
+import 'package:inventario_final/presentation/router/app_router.dart';
+import 'package:inventario_final/presentation/screens/dashboard/dashboard_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

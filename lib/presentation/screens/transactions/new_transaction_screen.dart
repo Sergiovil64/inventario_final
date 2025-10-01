@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventario_final/bloc/inventory/transaction_form_event.dart';
+import 'package:inventario_final/bloc/inventory/transaction_form_state.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../bloc/inventory/transaction_form_bloc.dart';

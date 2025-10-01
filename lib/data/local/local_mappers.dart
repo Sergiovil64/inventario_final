@@ -1,8 +1,7 @@
 import 'package:drift/drift.dart';
-
-import '../../models/entities.dart';
-import '../../models/enums.dart';
-import 'local_database.dart';
+import 'package:inventario_final/models/entities.dart';
+import 'package:inventario_final/models/enums.dart';
+import 'package:inventario_final/data/local/local_database.dart';
 
 SyncMetadata _toSyncMetadata(String id, DateTime updatedAt, bool pendingSync) {
   return SyncMetadata(id: id, updatedAt: updatedAt, pendingSync: pendingSync);

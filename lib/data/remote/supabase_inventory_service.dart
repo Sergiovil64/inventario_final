@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../models/entities.dart';
-import '../../models/enums.dart';
+import 'package:inventario_final/models/entities.dart';
+import 'package:inventario_final/models/enums.dart';
 
 class SupabaseInventoryService {
   SupabaseInventoryService({SupabaseClient? client})

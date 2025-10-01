@@ -1,4 +1,5 @@
-part of 'inventory_overview_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:inventario_final/models/entities.dart';
 
 enum InventoryOverviewStatus { initial, loading, success, failure }
 

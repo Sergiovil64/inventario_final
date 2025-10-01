@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-import 'enums.dart';
+import 'package:inventario_final/models/enums.dart';
 
 class SyncMetadata extends Equatable {
   const SyncMetadata({

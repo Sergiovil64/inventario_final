@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../bloc/sync/sync_bloc.dart';
+import 'package:inventario_final/bloc/sync/sync_bloc.dart';
+import 'package:inventario_final/bloc/sync/sync_event.dart';
+import 'package:inventario_final/bloc/sync/sync_state.dart';
 
 class SyncStatusBanner extends StatelessWidget {
   const SyncStatusBanner({super.key});

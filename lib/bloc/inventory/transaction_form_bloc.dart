@@ -1,13 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
-
-import '../../data/repositories/inventory_repository.dart';
-import '../../models/entities.dart';
-import '../../models/enums.dart';
-
-part 'transaction_form_event.dart';
-part 'transaction_form_state.dart';
+import 'package:inventario_final/data/repositories/inventory_repository.dart';
+import 'package:inventario_final/models/entities.dart';
+import 'package:inventario_final/bloc/inventory/transaction_form_event.dart';
+import 'package:inventario_final/bloc/inventory/transaction_form_state.dart';
 
 class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormState> {
   TransactionFormBloc({
