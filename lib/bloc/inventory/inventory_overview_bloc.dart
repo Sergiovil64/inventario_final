@@ -11,11 +11,13 @@ class InventoryOverviewBloc
   InventoryOverviewBloc(this._repository) : super(const InventoryOverviewState()) {
     on<InventoryOverviewSubscriptionRequested>(_onSubscriptionRequested);
     on<InventoryOverviewProductsUpdated>(_onProductsUpdated);
+    on<InventoryOverviewLocationsUpdated>(_onLocationsUpdated);
     on<InventoryOverviewSnapshotsUpdated>(_onSnapshotsUpdated);
   }
 
   final InventoryRepository _repository;
   StreamSubscription<List<ProductEntity>>? _productSubscription;
+  StreamSubscription<List<LocationEntity>>? _locationSubscription;
   StreamSubscription<List<InventorySnapshotEntity>>? _snapshotSubscription;
 
   Future<void> _onSubscriptionRequested(
@@ -29,6 +31,11 @@ class InventoryOverviewBloc
       add(InventoryOverviewProductsUpdated(products));
     });
 
+    await _locationSubscription?.cancel();
+    _locationSubscription = _repository.watchLocations().listen((locations) {
+      add(InventoryOverviewLocationsUpdated(locations));
+    });
+
     await _snapshotSubscription?.cancel();
     _snapshotSubscription = _repository.watchSnapshots().listen((snapshots) {
       add(InventoryOverviewSnapshotsUpdated(snapshots));
@@ -38,6 +45,7 @@ class InventoryOverviewBloc
   @override
   Future<void> close() async {
     await _productSubscription?.cancel();
+    await _locationSubscription?.cancel();
     await _snapshotSubscription?.cancel();
     return super.close();
   }
@@ -49,14 +57,19 @@ class InventoryOverviewBloc
     emit(state.copyWith(products: event.products));
   }
 
+  void _onLocationsUpdated(
+    InventoryOverviewLocationsUpdated event,
+    Emitter<InventoryOverviewState> emit,
+  ) {
+    emit(state.copyWith(locations: event.locations));
+  }
+
   void _onSnapshotsUpdated(
     InventoryOverviewSnapshotsUpdated event,
     Emitter<InventoryOverviewState> emit,
   ) {
-    final inventory = event.snapshots
-        .fold<Map<String, double>>({}, (acc, snapshot) {
-      acc[snapshot.productId] =
-          (acc[snapshot.productId] ?? 0) + snapshot.quantity;
+    final inventory = event.snapshots.fold<Map<String, double>>({}, (acc, snapshot) {
+      acc[snapshot.productId] = (acc[snapshot.productId] ?? 0) + snapshot.quantity;
       return acc;
     });
 

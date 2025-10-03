@@ -8,6 +8,7 @@ class InventoryOverviewState extends Equatable {
     this.status = InventoryOverviewStatus.initial,
     this.products = const [],
     this.snapshots = const [],
+    this.locations = const [],
     this.inventoryTotals = const {},
     this.errorMessage,
   });
@@ -15,6 +16,7 @@ class InventoryOverviewState extends Equatable {
   final InventoryOverviewStatus status;
   final List<ProductEntity> products;
   final List<InventorySnapshotEntity> snapshots;
+  final List<LocationEntity> locations;
   final Map<String, double> inventoryTotals;
   final String? errorMessage;
 
@@ -22,6 +24,7 @@ class InventoryOverviewState extends Equatable {
     InventoryOverviewStatus? status,
     List<ProductEntity>? products,
     List<InventorySnapshotEntity>? snapshots,
+    List<LocationEntity>? locations,
     Map<String, double>? inventoryTotals,
     String? errorMessage,
   }) {
@@ -29,6 +32,7 @@ class InventoryOverviewState extends Equatable {
       status: status ?? this.status,
       products: products ?? this.products,
       snapshots: snapshots ?? this.snapshots,
+      locations: locations ?? this.locations,
       inventoryTotals: inventoryTotals ?? this.inventoryTotals,
       errorMessage: errorMessage ?? this.errorMessage,
     );
@@ -39,6 +43,7 @@ class InventoryOverviewState extends Equatable {
         status,
         products,
         snapshots,
+        locations,
         inventoryTotals,
         errorMessage,
       ];

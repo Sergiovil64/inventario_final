@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventario_final/bloc/app_bloc_observer.dart';
 import 'package:inventario_final/bloc/authentication/authentication_bloc.dart';
 import 'package:inventario_final/bloc/authentication/authentication_event.dart';
+import 'package:inventario_final/bloc/authentication/authentication_state.dart';
 import 'package:inventario_final/bloc/sync/sync_bloc.dart';
 import 'package:inventario_final/bloc/sync/sync_event.dart';
 import 'package:inventario_final/config/supabase_config.dart';
@@ -60,20 +61,40 @@ class MainApp extends StatelessWidget {
               ..add(const AuthenticationStarted()),
           ),
           BlocProvider(
-            create: (context) => SyncBloc(repository: repository)
-              ..add(const SyncRequested(force: true)),
+            create: (context) => SyncBloc(repository: repository),
           ),
         ],
-        child: MaterialApp(
-          title: 'Inventario Offline',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-            useMaterial3: true,
+        child: _AppSyncListener(
+          child: MaterialApp(
+            title: 'Inventario Offline',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+              useMaterial3: true,
+            ),
+            onGenerateRoute: router.onGenerateRoute,
+            initialRoute: DashboardScreen.routeName,
           ),
-          onGenerateRoute: router.onGenerateRoute,
-          initialRoute: DashboardScreen.routeName,
         ),
       ),
+    );
+  }
+}
+
+class _AppSyncListener extends StatelessWidget {
+  const _AppSyncListener({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        // Disparar sincronización cuando el usuario se autentica exitosamente
+        if (state.status == AuthenticationStatus.authenticated) {
+          context.read<SyncBloc>().add(const SyncRequested(force: true));
+        }
+      },
+      child: child,
     );
   }
 }

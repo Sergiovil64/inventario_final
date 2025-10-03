@@ -11,6 +11,7 @@ class AuthenticationBloc
         super(const AuthenticationState.unknown()) {
     on<AuthenticationStarted>(_onStarted);
     on<AuthenticationLoginRequested>(_onLoginRequested);
+    on<AuthenticationRegisterRequested>(_onRegisterRequested);
     on<AuthenticationLogoutRequested>(_onLogoutRequested);
   }
 
@@ -36,6 +37,25 @@ class AuthenticationBloc
     emit(const AuthenticationState.loading());
     try {
       final user = await _repository.signIn(event.email, event.password);
+      emit(AuthenticationState.authenticated(user));
+    } catch (error) {
+      emit(AuthenticationState.failure(error.toString()));
+    }
+  }
+
+  Future<void> _onRegisterRequested(
+    AuthenticationRegisterRequested event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    emit(const AuthenticationState.loading());
+    try {
+      final user = await _repository.signUp(
+        email: event.email,
+        password: event.password,
+        firstName: event.firstName,
+        lastName: event.lastName,
+        locationId: event.locationId,
+      );
       emit(AuthenticationState.authenticated(user));
     } catch (error) {
       emit(AuthenticationState.failure(error.toString()));

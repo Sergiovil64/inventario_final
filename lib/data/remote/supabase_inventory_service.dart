@@ -132,14 +132,14 @@ class SupabaseInventoryService {
 
   static ProductEntity _productFromMap(Map<String, dynamic> row) {
     return ProductEntity(
-      id: row['id'] as String,
+      id: row['id'].toString(),
       name: row['name'] as String,
       sku: row['sku'] as String,
       category: row['category'] as String,
       unit: row['unit'] as String,
       price: _toDouble(row['price']),
       active: row['active'] as bool? ?? true,
-      sync: _syncMetadata(row['id'], row['updated_at']),
+      sync: _syncMetadata(row['id'].toString(), row['updated_at']),
     );
   }
 
@@ -158,11 +158,11 @@ class SupabaseInventoryService {
 
   static LocationEntity _locationFromMap(Map<String, dynamic> row) {
     return LocationEntity(
-      id: row['id'] as String,
+      id: row['id'].toString(),
       name: row['name'] as String,
       type: LocationTypeX.fromValue(row['type'] as String),
       address: row['address'] as String,
-      sync: _syncMetadata(row['id'], row['updated_at']),
+      sync: _syncMetadata(row['id'].toString(), row['updated_at']),
     );
   }
 
@@ -178,13 +178,13 @@ class SupabaseInventoryService {
 
   static EmployeeEntity _employeeFromMap(Map<String, dynamic> row) {
     return EmployeeEntity(
-      id: row['id'] as String,
+      id: row['id'].toString(),
       firstName: row['first_name'] as String,
       lastName: row['last_name'] as String,
       email: row['email'] as String,
       active: row['active'] as bool? ?? true,
-      locationId: row['location_id'] as String,
-      sync: _syncMetadata(row['id'], row['updated_at']),
+      locationId: row['location_id'].toString(),
+      sync: _syncMetadata(row['id'].toString(), row['updated_at']),
     );
   }
 
@@ -202,12 +202,12 @@ class SupabaseInventoryService {
 
   static InventorySnapshotEntity _snapshotFromMap(Map<String, dynamic> row) {
     return InventorySnapshotEntity(
-      id: row['id'] as String,
-      productId: row['product_id'] as String,
-      locationId: row['location_id'] as String,
+      id: row['id'].toString(),
+      productId: row['product_id'].toString(),
+      locationId: row['location_id'].toString(),
       quantity: _toDouble(row['quantity']),
       updatedAt: _parseDateTime(row['updated_at']),
-      sync: _syncMetadata(row['id'], row['updated_at']),
+      sync: _syncMetadata(row['id'].toString(), row['updated_at']),
     );
   }
 
@@ -223,17 +223,17 @@ class SupabaseInventoryService {
 
   static InventoryTransactionEntity _transactionFromMap(Map<String, dynamic> row) {
     return InventoryTransactionEntity(
-      id: row['id'] as String,
-      productId: row['product_id'] as String,
-      sourceLocationId: row['source_location_id'] as String?,
-      targetLocationId: row['target_location_id'] as String?,
+      id: row['id'].toString(),
+      productId: row['product_id'].toString(),
+      sourceLocationId: row['source_location_id']?.toString(),
+      targetLocationId: row['target_location_id']?.toString(),
       quantity: _toDouble(row['quantity']),
       transactionType: TransactionTypeX.fromValue(row['transaction_type'] as String),
       reference: row['reference'] as String,
       note: row['note'] as String?,
-      employeeId: row['employee_id'] as String,
+      employeeId: row['employee_id'].toString(),
       occurredAt: _parseDateTime(row['occurred_at']),
-      sync: _syncMetadata(row['id'], row['updated_at']),
+      sync: _syncMetadata(row['id'].toString(), row['updated_at']),
     );
   }
 

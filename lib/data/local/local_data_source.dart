@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart' show InsertMode, Value;
-import 'package:inventario_final/data/local/local_database.dart';
-import 'package:inventario_final/data/local/local_mappers.dart';
-import 'package:inventario_final/models/entities.dart';
-import 'package:inventario_final/models/enums.dart';
+import './local_database.dart';
+import './local_mappers.dart';
+import '../../models/entities.dart';
+import '../../models/enums.dart';
 
 
 

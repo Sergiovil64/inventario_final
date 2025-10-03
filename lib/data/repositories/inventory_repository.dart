@@ -43,6 +43,18 @@ class InventoryRepository {
   Future<void> upsertTransaction(InventoryTransactionEntity entity) =>
       _local.upsertTransaction(entity);
 
+
+  Future<void> loadLocations() async {
+    try {
+      final locations = await _remote.fetchLocations();
+      for (final location in locations) {
+        await _local.upsertLocation(location);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> syncAll({bool force = false}) async {
     if (!await _connectionChecker()) {
       throw const InventorySyncException('No hay conexión a internet');

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/authentication/authentication_bloc.dart';
 import '../../../bloc/authentication/authentication_event.dart';
 import '../../../bloc/authentication/authentication_state.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -82,29 +83,38 @@ class _LoginScreenState extends State<LoginScreen> {
                     BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, state) {
                         final isLoading = state.status == AuthenticationStatus.loading;
-                        return SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: isLoading
-                                ? null
-                                : () {
-                                    if (_formKey.currentState?.validate() ?? false) {
-                                      context.read<AuthenticationBloc>().add(
-                                            AuthenticationLoginRequested(
-                                              email: _emailController.text,
-                                              password: _passwordController.text,
-                                            ),
-                                          );
-                                    }
-                                  },
-                            child: isLoading
-                                ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(strokeWidth: 2),
-                                  )
-                                : const Text('Ingresar'),
-                          ),
+                        return Column(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: isLoading
+                                    ? null
+                                    : () {
+                                        if (_formKey.currentState?.validate() ?? false) {
+                                          context.read<AuthenticationBloc>().add(
+                                                AuthenticationLoginRequested(
+                                                  email: _emailController.text,
+                                                  password: _passwordController.text,
+                                                ),
+                                              );
+                                        }
+                                      },
+                                child: isLoading
+                                    ? const SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(strokeWidth: 2),
+                                      )
+                                    : const Text('Ingresar'),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            TextButton(
+                              onPressed: () => Navigator.pushNamed(context, RegisterScreen.routeName),
+                              child: const Text('¿No tienes cuenta? Regístrate'),
+                            ),
+                          ],
                         );
                       },
                     ),

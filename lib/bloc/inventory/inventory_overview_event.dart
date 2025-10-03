@@ -22,6 +22,15 @@ class InventoryOverviewProductsUpdated extends InventoryOverviewEvent {
   List<Object?> get props => [products];
 }
 
+class InventoryOverviewLocationsUpdated extends InventoryOverviewEvent {
+  const InventoryOverviewLocationsUpdated(this.locations);
+
+  final List<LocationEntity> locations;
+
+  @override
+  List<Object?> get props => [locations];
+}
+
 class InventoryOverviewSnapshotsUpdated extends InventoryOverviewEvent {
   const InventoryOverviewSnapshotsUpdated(this.snapshots);
 
