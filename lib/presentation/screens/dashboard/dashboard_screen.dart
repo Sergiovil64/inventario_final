@@ -8,7 +8,6 @@ import 'package:inventario_final/bloc/sync/sync_bloc.dart';
 import 'package:inventario_final/bloc/sync/sync_event.dart';
 import 'package:inventario_final/bloc/inventory/inventory_overview_event.dart';
 import 'package:inventario_final/bloc/inventory/inventory_overview_state.dart';
-import 'package:inventario_final/data/repositories/inventory_repository.dart';
 import 'package:inventario_final/presentation/screens/auth/login_screen.dart';
 import 'package:inventario_final/presentation/screens/products/product_list_screen.dart';
 import 'package:inventario_final/presentation/screens/transactions/new_transaction_screen.dart';
@@ -43,12 +42,7 @@ class DashboardScreen extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Inventario - Dashboard'),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.person_outline),
-                onPressed: () => context.read<AuthenticationBloc>().add(
-                      const AuthenticationLogoutRequested(),
-                    ),
-              ),
+             
               IconButton(
                 icon: const Icon(Icons.shopping_cart_outlined),
                 onPressed: () => Navigator.pushNamed(context, NewTransactionScreen.routeName),
@@ -57,17 +51,15 @@ class DashboardScreen extends StatelessWidget {
                 icon: const Icon(Icons.store_outlined),
                 onPressed: () => Navigator.pushNamed(context, ProductListScreen.routeName),
               ),
-            ],
-          ),
-          body: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => InventoryOverviewBloc(context.read<InventoryRepository>())
-                  ..add(const InventoryOverviewSubscriptionRequested()),
+               IconButton(
+                icon: const Icon(Icons.logout_outlined),
+                onPressed: () => context.read<AuthenticationBloc>().add(
+                      const AuthenticationLogoutRequested(),
+                    ),
               ),
             ],
-            child: const _DashboardView(),
           ),
+          body: const _DashboardView(),
         );
       },
     );

@@ -98,7 +98,7 @@ class AuthRepository {
       sync: SyncMetadata(
         id: user.id,
         updatedAt: now,
-        pendingSync: false, // Se insertará en Supabase inmediatamente
+        pendingSync: false,
       ),
     );
 

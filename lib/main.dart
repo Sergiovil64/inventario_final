@@ -4,6 +4,8 @@ import 'package:inventario_final/bloc/app_bloc_observer.dart';
 import 'package:inventario_final/bloc/authentication/authentication_bloc.dart';
 import 'package:inventario_final/bloc/authentication/authentication_event.dart';
 import 'package:inventario_final/bloc/authentication/authentication_state.dart';
+import 'package:inventario_final/bloc/inventory/inventory_overview_bloc.dart';
+import 'package:inventario_final/bloc/inventory/inventory_overview_event.dart';
 import 'package:inventario_final/bloc/sync/sync_bloc.dart';
 import 'package:inventario_final/bloc/sync/sync_event.dart';
 import 'package:inventario_final/config/supabase_config.dart';
@@ -62,6 +64,10 @@ class MainApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => SyncBloc(repository: repository),
+          ),
+          BlocProvider(
+            create: (context) => InventoryOverviewBloc(repository)
+              ..add(const InventoryOverviewSubscriptionRequested()),
           ),
         ],
         child: _AppSyncListener(
