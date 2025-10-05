@@ -23,6 +23,12 @@ class LocalInventoryDataSource {
     return rows.map(mapProductRow).toList();
   }
 
+  Future<ProductEntity?> getProductById(String id) async {
+    final query = _db.select(_db.productRows)..where((tbl) => tbl.id.equals(id));
+    final row = await query.getSingleOrNull();
+    return row == null ? null : mapProductRow(row);
+  }
+
   Future<List<ProductEntity>> getPendingProducts() async {
     final query = _db.select(_db.productRows)
       ..where((tbl) => tbl.pendingSync.equals(true));

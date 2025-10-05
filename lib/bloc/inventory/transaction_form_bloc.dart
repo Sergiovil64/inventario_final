@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
+import 'package:inventario_final/data/repositories/auth_repository.dart';
 import 'package:inventario_final/data/repositories/inventory_repository.dart';
 import 'package:inventario_final/models/entities.dart';
 import 'package:inventario_final/bloc/inventory/transaction_form_event.dart';
@@ -8,8 +9,10 @@ import 'package:inventario_final/bloc/inventory/transaction_form_state.dart';
 class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormState> {
   TransactionFormBloc({
     required InventoryRepository repository,
+    required AuthRepository authRepository,
     required Uuid uuid,
   })  : _repository = repository,
+        _authRepository = authRepository,
         _uuid = uuid,
         super(const TransactionFormState()) {
     on<TransactionFormInitialized>(_onInitialized);
@@ -25,6 +28,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
   }
 
   final InventoryRepository _repository;
+  final AuthRepository _authRepository;
   final Uuid _uuid;
 
   Future<void> _onInitialized(
@@ -115,6 +119,18 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     emit(state.copyWith(status: TransactionFormStatus.loading));
 
     try {
+      // Obtener empleado actual automáticamente
+      final currentEmployee = await _authRepository.currentUser();
+      final employeeId = currentEmployee?.id ?? '';
+
+      if (employeeId.isEmpty) {
+        emit(state.copyWith(
+          status: TransactionFormStatus.failure,
+          errorMessage: 'No se pudo obtener el usuario autenticado',
+        ));
+        return;
+      }
+
       final transaction = InventoryTransactionEntity(
         id: _uuid.v4(),
         productId: state.productId!,
@@ -124,7 +140,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
         transactionType: state.transactionType,
         reference: state.reference,
         note: state.note,
-        employeeId: state.employeeId,
+        employeeId: employeeId, // Usa el empleado autenticado
         occurredAt: DateTime.now().toUtc(),
         sync: SyncMetadata(
           id: _uuid.v4(),

@@ -238,6 +238,18 @@ class InventoryRepository {
   }
 
   static Future<bool> _defaultConnectionChecker() async => true;
+
+  // Additional query methods
+  Future<List<LocationEntity>> getAllLocations() => _local.getLocations();
+
+  Future<ProductEntity?> getProductById(String id) => _local.getProductById(id);
+
+  Future<void> saveProduct(ProductEntity product) => _local.upsertProduct(product);
+
+  Future<void> saveSnapshot(InventorySnapshotEntity snapshot) => _local.upsertSnapshot(snapshot);
+
+  Future<void> saveTransaction(InventoryTransactionEntity transaction) => 
+      _local.upsertTransaction(transaction);
 }
 
 class InventorySyncException implements Exception {
