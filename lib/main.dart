@@ -98,6 +98,13 @@ class _AppSyncListener extends StatelessWidget {
         // Disparar sincronización cuando el usuario se autentica exitosamente
         if (state.status == AuthenticationStatus.authenticated) {
           context.read<SyncBloc>().add(const SyncRequested(force: true));
+          
+          // Inicializar la ubicación seleccionada con la ubicación del empleado
+          if (state.user?.locationId != null && state.user!.locationId.isNotEmpty) {
+            context.read<InventoryOverviewBloc>().add(
+              InventoryOverviewLocationChanged(state.user!.locationId),
+            );
+          }
         }
       },
       child: child,

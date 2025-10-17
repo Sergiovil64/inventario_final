@@ -5,6 +5,7 @@ import '../screens/auth/register_screen.dart';
 import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/products/product_form_screen.dart';
 import '../screens/products/product_list_screen.dart';
+import '../screens/reports/reports_screen.dart';
 import '../screens/transactions/new_transaction_screen.dart';
 
 class AppRouter {
@@ -21,6 +22,8 @@ class AppRouter {
         );
       case NewTransactionScreen.routeName:
         return MaterialPageRoute(builder: (_) => const NewTransactionScreen());
+      case ReportsScreen.routeName:
+        return MaterialPageRoute(builder: (_) => const ReportsScreen());
       case LoginScreen.routeName:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case RegisterScreen.routeName:

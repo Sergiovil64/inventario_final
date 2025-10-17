@@ -121,5 +121,31 @@ class AuthRepository {
   }
 
   Future<void> signOut() => _remote.signOut();
+
+  Future<EmployeeEntity> updateEmployeeLocation(String employeeId, String newLocationId) async {
+    final employees = await _local.getEmployees();
+    final employee = employees.firstWhere((e) => e.id == employeeId);
+    
+    final updatedEmployee = employee.copyWith(
+      locationId: newLocationId,
+      sync: employee.sync.copyWith(
+        updatedAt: DateTime.now().toUtc(),
+        pendingSync: true,
+      ),
+    );
+
+    await _local.upsertEmployee(updatedEmployee);
+
+    try {
+      final syncedEmployees = await _inventoryService.upsertEmployees([updatedEmployee]);
+      if (syncedEmployees.isNotEmpty) {
+        final synced = syncedEmployees.first;
+        await _local.upsertEmployee(synced);
+        return synced;
+      }
+    } catch (e) {}
+    
+    return updatedEmployee;
+  }
 }
 

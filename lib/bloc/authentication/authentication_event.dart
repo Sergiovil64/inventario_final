@@ -44,3 +44,12 @@ class AuthenticationLogoutRequested extends AuthenticationEvent {
   const AuthenticationLogoutRequested();
 }
 
+class AuthenticationLocationChanged extends AuthenticationEvent {
+  const AuthenticationLocationChanged({required this.newLocationId});
+
+  final String newLocationId;
+
+  @override
+  List<Object?> get props => [newLocationId];
+}
+

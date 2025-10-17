@@ -13,6 +13,7 @@ class InventoryOverviewBloc
     on<InventoryOverviewProductsUpdated>(_onProductsUpdated);
     on<InventoryOverviewLocationsUpdated>(_onLocationsUpdated);
     on<InventoryOverviewSnapshotsUpdated>(_onSnapshotsUpdated);
+    on<InventoryOverviewLocationChanged>(_onLocationChanged);
   }
 
   final InventoryRepository _repository;
@@ -68,15 +69,35 @@ class InventoryOverviewBloc
     InventoryOverviewSnapshotsUpdated event,
     Emitter<InventoryOverviewState> emit,
   ) {
-    final inventory = event.snapshots.fold<Map<String, double>>({}, (acc, snapshot) {
+    _recalculateInventory(event.snapshots, emit);
+  }
+
+  void _onLocationChanged(
+    InventoryOverviewLocationChanged event,
+    Emitter<InventoryOverviewState> emit,
+  ) {
+    emit(state.copyWith(selectedLocationId: event.locationId));
+    _recalculateInventory(state.snapshots, emit);
+  }
+
+  void _recalculateInventory(
+    List<InventorySnapshotEntity> snapshots,
+    Emitter<InventoryOverviewState> emit,
+  ) {
+    // Filtrar snapshots por ubicación si hay una seleccionada
+    final filteredSnapshots = state.selectedLocationId == null
+        ? snapshots
+        : snapshots.where((s) => s.locationId == state.selectedLocationId).toList();
+
+    final inventory = filteredSnapshots.fold<Map<String, double>>({}, (acc, snapshot) {
       acc[snapshot.productId] = (acc[snapshot.productId] ?? 0) + snapshot.quantity;
       return acc;
     });
 
     emit(state.copyWith(
       status: InventoryOverviewStatus.success,
-      snapshots: event.snapshots,
-      inventoryTotals: inventory,
+      snapshots: snapshots, // Guardamos todos los snapshots
+      inventoryTotals: inventory, // Pero calculamos totales filtrados
     ));
   }
 }

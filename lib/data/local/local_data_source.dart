@@ -193,6 +193,31 @@ class LocalInventoryDataSource {
     return rows.map(mapTransactionRow).toList();
   }
 
+  Future<List<InventoryTransactionEntity>> getTransactionsByDateRange({
+    required DateTime startDate,
+    required DateTime endDate,
+    String? locationId,
+  }) async {
+    // Obtener todas las transacciones y filtrar en memoria
+    // Esto es más simple y funciona mejor con Drift
+    final allTransactions = await getTransactions();
+    
+    var filtered = allTransactions.where((t) => 
+      t.occurredAt.isAfter(startDate.subtract(const Duration(seconds: 1))) &&
+      t.occurredAt.isBefore(endDate.add(const Duration(days: 1)))
+    ).toList();
+
+    // Filtrar por ubicación si se especifica
+    if (locationId != null) {
+      filtered = filtered.where((t) =>
+        t.sourceLocationId == locationId ||
+        t.targetLocationId == locationId
+      ).toList();
+    }
+
+    return filtered;
+  }
+
   Future<List<InventoryTransactionEntity>> getPendingTransactions() async {
     final query = _db.select(_db.inventoryTransactionRows)
       ..where((tbl) => tbl.pendingSync.equals(true));

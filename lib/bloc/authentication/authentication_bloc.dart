@@ -13,6 +13,7 @@ class AuthenticationBloc
     on<AuthenticationLoginRequested>(_onLoginRequested);
     on<AuthenticationRegisterRequested>(_onRegisterRequested);
     on<AuthenticationLogoutRequested>(_onLogoutRequested);
+    on<AuthenticationLocationChanged>(_onLocationChanged);
   }
 
   final AuthRepository _repository;
@@ -68,6 +69,23 @@ class AuthenticationBloc
   ) async {
     await _repository.signOut();
     emit(const AuthenticationState.unauthenticated());
+  }
+
+  Future<void> _onLocationChanged(
+    AuthenticationLocationChanged event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    if (state.user == null) return;
+    
+    try {
+      final updatedUser = await _repository.updateEmployeeLocation(
+        state.user!.id,
+        event.newLocationId,
+      );
+      emit(AuthenticationState.authenticated(updatedUser));
+    } catch (error) {
+      emit(AuthenticationState.failure(error.toString()));
+    }
   }
 }
 

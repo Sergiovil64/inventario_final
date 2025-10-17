@@ -164,11 +164,7 @@ class InventoryRepository {
     final status = await _local.getSyncStatus(SyncResource.inventorySnapshots);
     final updatedAfter = force ? null : status?.lastSyncedAt;
 
-    final remoteUpdates = await _remote.fetchSnapshots(updatedAfter: updatedAfter);
-    for (final snapshot in remoteUpdates) {
-      await _local.upsertSnapshot(snapshot);
-    }
-
+    // Primero enviar los snapshots pendientes locales al servidor
     final pending = await _local.getPendingSnapshots();
     List<InventorySnapshotEntity> synced = const [];
     if (pending.isNotEmpty) {
@@ -176,6 +172,28 @@ class InventoryRepository {
       for (final snapshot in synced) {
         await _local.upsertSnapshot(snapshot);
       }
+    }
+
+    // Luego obtener actualizaciones remotas (solo si no hay conflictos)
+    final remoteUpdates = await _remote.fetchSnapshots(updatedAfter: updatedAfter);
+    final localSnapshots = await _local.getSnapshots();
+    
+    // Crear un mapa de snapshots locales por ID para comparación rápida
+    final localSnapshotsMap = {
+      for (var snapshot in localSnapshots) snapshot.id: snapshot
+    };
+
+    for (final remoteSnapshot in remoteUpdates) {
+      final localSnapshot = localSnapshotsMap[remoteSnapshot.id];
+      
+      // Solo actualizar si:
+      // 1. No existe localmente, O
+      // 2. El remoto es más reciente que el local
+      if (localSnapshot == null || 
+          remoteSnapshot.sync.updatedAt.isAfter(localSnapshot.sync.updatedAt)) {
+        await _local.upsertSnapshot(remoteSnapshot);
+      }
+      // Si el local es más reciente, no sobrescribir
     }
 
     await _persistSyncStatus(
@@ -242,6 +260,8 @@ class InventoryRepository {
   // Additional query methods
   Future<List<LocationEntity>> getAllLocations() => _local.getLocations();
 
+  Future<List<ProductEntity>> getProducts() => _local.getProducts();
+
   Future<ProductEntity?> getProductById(String id) => _local.getProductById(id);
 
   Future<void> saveProduct(ProductEntity product) => _local.upsertProduct(product);
@@ -250,6 +270,17 @@ class InventoryRepository {
 
   Future<void> saveTransaction(InventoryTransactionEntity transaction) => 
       _local.upsertTransaction(transaction);
+
+  Future<List<InventoryTransactionEntity>> getTransactionsByDateRange({
+    required DateTime startDate,
+    required DateTime endDate,
+    String? locationId,
+  }) =>
+      _local.getTransactionsByDateRange(
+        startDate: startDate,
+        endDate: endDate,
+        locationId: locationId,
+      );
 }
 
 class InventorySyncException implements Exception {

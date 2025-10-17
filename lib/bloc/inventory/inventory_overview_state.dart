@@ -10,6 +10,7 @@ class InventoryOverviewState extends Equatable {
     this.snapshots = const [],
     this.locations = const [],
     this.inventoryTotals = const {},
+    this.selectedLocationId,
     this.errorMessage,
   });
 
@@ -18,6 +19,7 @@ class InventoryOverviewState extends Equatable {
   final List<InventorySnapshotEntity> snapshots;
   final List<LocationEntity> locations;
   final Map<String, double> inventoryTotals;
+  final String? selectedLocationId;
   final String? errorMessage;
 
   InventoryOverviewState copyWith({
@@ -26,6 +28,7 @@ class InventoryOverviewState extends Equatable {
     List<InventorySnapshotEntity>? snapshots,
     List<LocationEntity>? locations,
     Map<String, double>? inventoryTotals,
+    String? selectedLocationId,
     String? errorMessage,
   }) {
     return InventoryOverviewState(
@@ -34,6 +37,7 @@ class InventoryOverviewState extends Equatable {
       snapshots: snapshots ?? this.snapshots,
       locations: locations ?? this.locations,
       inventoryTotals: inventoryTotals ?? this.inventoryTotals,
+      selectedLocationId: selectedLocationId ?? this.selectedLocationId,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
@@ -45,6 +49,7 @@ class InventoryOverviewState extends Equatable {
         snapshots,
         locations,
         inventoryTotals,
+        selectedLocationId,
         errorMessage,
       ];
 }

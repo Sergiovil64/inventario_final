@@ -40,3 +40,12 @@ class InventoryOverviewSnapshotsUpdated extends InventoryOverviewEvent {
   List<Object?> get props => [snapshots];
 }
 
+class InventoryOverviewLocationChanged extends InventoryOverviewEvent {
+  const InventoryOverviewLocationChanged(this.locationId);
+
+  final String? locationId;
+
+  @override
+  List<Object?> get props => [locationId];
+}
+
