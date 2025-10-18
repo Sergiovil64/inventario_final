@@ -11,8 +11,16 @@ class SupabaseAuthService {
   Session? currentSession() => _client.auth.currentSession;
 
   // Método para iniciar sesión
-  Future<AuthResponse> signIn(String email, String password) {
-    return _client.auth.signInWithPassword(email: email, password: password);
+  Future<AuthResponse> signIn(String email, String password) async {
+    return _client.auth.signInWithPassword(
+      email: email,
+      password: password,
+    ).timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw Exception('Timeout al intentar autenticar. Verifica tu conexión a internet.');
+      },
+    );
   }
 
   // Método para registrar un nuevo usuario
@@ -25,6 +33,11 @@ class SupabaseAuthService {
       email: email,
       password: password,
       data: data,
+    ).timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw Exception('Timeout al intentar registrar. Verifica tu conexión a internet.');
+      },
     );
   }
 

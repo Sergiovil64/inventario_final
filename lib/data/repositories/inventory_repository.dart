@@ -57,13 +57,9 @@ class InventoryRepository {
 
   // Método para cargar las ubicaciones
   Future<void> loadLocations() async {
-    try {
-      final locations = await _remote.fetchLocations();
-      for (final location in locations) {
-        await _local.upsertLocation(location);
-      }
-    } catch (e) {
-      rethrow;
+    final locations = await _remote.fetchLocations();
+    for (final location in locations) {
+      await _local.upsertLocation(location);
     }
   }
 
