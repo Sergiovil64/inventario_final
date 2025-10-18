@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                 Text(
                                   'Inicia sesión para continuar',
                                   style: theme.textTheme.bodyMedium?.copyWith(
-                                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -250,7 +250,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                       child: Text(
                                         'o',
                                         style: TextStyle(
-                                          color: theme.colorScheme.onSurface.withOpacity(0.6),
+                                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                                         ),
                                       ),
                                     ),

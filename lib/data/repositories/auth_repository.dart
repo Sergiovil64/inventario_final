@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:inventario_final/data/local/local_data_source.dart';
 import 'package:inventario_final/data/remote/supabase_auth_service.dart';
 import 'package:inventario_final/data/remote/supabase_inventory_service.dart';
@@ -143,7 +144,9 @@ class AuthRepository {
         await _local.upsertEmployee(synced);
         return synced;
       }
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
     
     return updatedEmployee;
   }

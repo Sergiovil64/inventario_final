@@ -68,7 +68,7 @@ class LocationSelector extends StatelessWidget {
                               style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 letterSpacing: 0.5,
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                               ),
                             ),
                             const SizedBox(height: 4),

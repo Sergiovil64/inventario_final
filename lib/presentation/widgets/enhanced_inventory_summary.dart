@@ -60,7 +60,7 @@ class EnhancedInventorySummary extends StatelessWidget {
                             Text(
                               isGlobalView ? 'Vista Global' : 'Ubicación Actual',
                               style: theme.textTheme.titleSmall?.copyWith(
-                                color: theme.colorScheme.onPrimaryContainer.withOpacity(0.8),
+                                color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
                               ),
                             ),
                             Text(
@@ -92,7 +92,7 @@ class EnhancedInventorySummary extends StatelessWidget {
                       Container(
                         width: 1,
                         height: 60,
-                        color: theme.colorScheme.onPrimaryContainer.withOpacity(0.2),
+                        color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.2),
                       ),
                       Expanded(
                         child: _StatItem(
@@ -170,7 +170,7 @@ class _StatItem extends StatelessWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: color.withOpacity(0.8),
+            color: color.withValues(alpha: 0.8),
           ),
         ),
       ],
@@ -218,7 +218,7 @@ class _StockComparisonCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.15),
+                      color: color.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(icon, color: color, size: 24),
@@ -237,7 +237,7 @@ class _StockComparisonCard extends StatelessWidget {
               Text(
                 title,
                 style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurface.withOpacity(0.6),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.5,
                 ),
@@ -246,7 +246,7 @@ class _StockComparisonCard extends StatelessWidget {
               Text(
                 subtitle,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -262,7 +262,7 @@ class _StockComparisonCard extends StatelessWidget {
               Text(
                 'unidades',
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: color.withOpacity(0.7),
+                  color: color.withValues(alpha: 0.7),
                 ),
               ),
             ],
