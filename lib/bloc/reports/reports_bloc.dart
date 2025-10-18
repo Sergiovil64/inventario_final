@@ -5,6 +5,9 @@ import 'package:inventario_final/data/repositories/inventory_repository.dart';
 import 'package:inventario_final/models/entities.dart';
 import 'package:inventario_final/models/enums.dart';
 
+// Clase ReportsBloc que sirve para manejar el estado de los reportes
+// Se encarga de manejar el estado de los reportes y de las acciones de sincronización
+// También se encarga de manejar el estado de la aplicación y de las acciones de sincronización
 class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
   ReportsBloc({
     required InventoryRepository inventoryRepository,
@@ -18,6 +21,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
 
   final InventoryRepository _inventoryRepository;
 
+  // Método para manejar el evento de carga de reportes de ventas y compras
   Future<void> _onLoadSalesAndPurchasesReport(
     LoadSalesAndPurchasesReport event,
     Emitter<ReportsState> emit,
@@ -99,6 +103,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     }
   }
 
+  // Método para manejar el evento de carga de reportes de transferencias
   Future<void> _onLoadTransfersReport(
     LoadTransfersReport event,
     Emitter<ReportsState> emit,
@@ -150,6 +155,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     }
   }
 
+  // Método para manejar el evento de carga de reportes de ventas del día
   Future<void> _onLoadDailySalesReport(
     LoadDailySalesReport event,
     Emitter<ReportsState> emit,
@@ -218,6 +224,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     }
   }
 
+  // Método para manejar el evento de reset de reportes
   Future<void> _onResetReports(
     ResetReports event,
     Emitter<ReportsState> emit,

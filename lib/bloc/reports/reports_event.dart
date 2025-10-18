@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+// Clase ReportsEvent que sirve para manejar los eventos de los reportes
 abstract class ReportsEvent extends Equatable {
   const ReportsEvent();
 

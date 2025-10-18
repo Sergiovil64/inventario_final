@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
+// Clase SyncEvent que sirve para manejar los eventos de la sincronización
 abstract class SyncEvent extends Equatable {
   const SyncEvent();
 

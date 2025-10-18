@@ -3,6 +3,7 @@ import 'package:inventario_final/models/entities.dart';
 
 enum ProductFormStatus { initial, loading, success, failure }
 
+// Clase ProductFormState que sirve para manejar el estado de la forma de producto
 class ProductFormState extends Equatable {
   const ProductFormState({
     this.status = ProductFormStatus.initial,

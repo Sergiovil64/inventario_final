@@ -4,6 +4,7 @@ import 'package:inventario_final/data/remote/supabase_auth_service.dart';
 import 'package:inventario_final/data/remote/supabase_inventory_service.dart';
 import 'package:inventario_final/models/entities.dart';
 
+// Clase AuthRepository que sirve para manejar el repositorio de autenticación
 class AuthRepository {
   AuthRepository({
     required SupabaseAuthService remoteService,
@@ -17,6 +18,7 @@ class AuthRepository {
   final LocalInventoryDataSource _local;
   final SupabaseInventoryService _inventoryService;
 
+  // Método para obtener el usuario actual
   Future<EmployeeEntity?> currentUser() async {
     final session = _remote.currentSession();
     final user = session?.user;
@@ -42,6 +44,7 @@ class AuthRepository {
     );
   }
 
+  // Método para iniciar sesión
   Future<EmployeeEntity> signIn(String email, String password) async {
     final session = await _remote.signIn(email, password);
     final user = session.user;
@@ -67,6 +70,7 @@ class AuthRepository {
     );
   }
 
+  // Método para registrar un nuevo usuario
   Future<EmployeeEntity> signUp({
     required String email,
     required String password,
@@ -121,8 +125,10 @@ class AuthRepository {
     }
   }
 
+  // Método para cerrar sesión
   Future<void> signOut() => _remote.signOut();
 
+  // Método para actualizar la ubicación de un empleado
   Future<EmployeeEntity> updateEmployeeLocation(String employeeId, String newLocationId) async {
     final employees = await _local.getEmployees();
     final employee = employees.firstWhere((e) => e.id == employeeId);

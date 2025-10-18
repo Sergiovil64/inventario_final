@@ -4,6 +4,7 @@ import 'package:inventario_final/models/enums.dart';
 
 enum TransactionFormStatus { idle, loading, success, failure }
 
+// Clase TransactionFormState que sirve para manejar el estado de la forma de transacción
 class TransactionFormState extends Equatable {
   const TransactionFormState({
     this.status = TransactionFormStatus.idle,

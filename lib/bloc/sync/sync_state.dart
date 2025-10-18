@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 enum SyncStatus { idle, inProgress, success, failure }
 
+// Clase SyncState que sirve para manejar el estado de la sincronización
 class SyncState extends Equatable {
   const SyncState({
     this.status = SyncStatus.idle,

@@ -6,6 +6,9 @@ import 'package:inventario_final/bloc/sync/sync_state.dart';
 import 'package:inventario_final/data/repositories/inventory_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Clase SyncBloc que sirve para manejar el estado de la sincronización
+// Se encarga de manejar el estado de la sincronización y de las acciones de sincronización
+// También se encarga de manejar el estado de la aplicación y de las acciones de sincronización
 class SyncBloc extends Bloc<SyncEvent, SyncState> {
   SyncBloc({
     required InventoryRepository repository,
@@ -27,6 +30,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
   final Connectivity _connectivity;
   StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 
+  // Método para manejar el evento de sincronización
   Future<void> _onSyncRequested(SyncRequested event, Emitter<SyncState> emit) async {
     if (state.status == SyncStatus.inProgress) return;
     emit(state.copyWith(status: SyncStatus.inProgress, message: 'Sincronizando...'));
@@ -48,6 +52,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     }
   }
 
+  // Método para manejar el evento de cambio de conectividad
   void _onConnectivityChanged(
     SyncConnectivityChanged event,
     Emitter<SyncState> emit,
@@ -59,6 +64,7 @@ class SyncBloc extends Bloc<SyncEvent, SyncState> {
     }
   }
 
+  // Método para manejar el evento de reset de estado de sincronización
   void _onStatusReset(SyncStatusResetRequested event, Emitter<SyncState> emit) {
     emit(state.copyWith(status: SyncStatus.idle, message: null));
   }

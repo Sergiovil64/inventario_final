@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:inventario_final/models/entities.dart';
 
-
+// Clase InventoryOverviewEvent que sirve para manejar los eventos de inventario
 abstract class InventoryOverviewEvent extends Equatable {
   const InventoryOverviewEvent();
 

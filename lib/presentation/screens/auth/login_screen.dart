@@ -5,6 +5,7 @@ import '../../../bloc/authentication/authentication_event.dart';
 import '../../../bloc/authentication/authentication_state.dart';
 import 'register_screen.dart';
 
+// Clase LoginScreen que sirve para manejar la pantalla de login
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -15,10 +16,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+  // Clave del formulario
   final _formKey = GlobalKey<FormState>();
+  // Controlador del email
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  // Controlador de la contraseña
   bool _obscurePassword = true;
+  // Controlador de la animación
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
@@ -30,30 +35,38 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
+    // Animación de fade
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
+    // Animación de slide
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, 0.3),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic));
+    // Iniciar la animación
     _animationController.forward();
   }
 
   @override
   void dispose() {
+    // Limpiar los controladores
     _emailController.dispose();
     _passwordController.dispose();
+    // Limpiar la animación
     _animationController.dispose();
+    // Dispose del estado
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Obtener el tema y el tamaño de la pantalla
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      // Listener del bloc de autenticación
       body: BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           if (state.status == AuthenticationStatus.authenticated) {
@@ -157,9 +170,11 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                     fillColor: theme.colorScheme.surface,
                                   ),
                                   validator: (value) {
+                                    // Validar que el correo no esté vacío
                                     if (value == null || value.isEmpty) {
                                       return 'Por favor ingresa tu correo';
                                     }
+                                    // Validar que el correo sea válido
                                     if (!value.contains('@')) {
                                       return 'Ingresa un correo válido';
                                     }

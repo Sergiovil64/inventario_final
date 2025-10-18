@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+// Clase ProductFormEvent que sirve para manejar los eventos de la forma de producto
 abstract class ProductFormEvent extends Equatable {
   const ProductFormEvent();
 

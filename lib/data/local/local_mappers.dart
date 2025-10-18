@@ -3,10 +3,12 @@ import 'package:inventario_final/models/entities.dart';
 import 'package:inventario_final/models/enums.dart';
 import 'package:inventario_final/data/local/local_database.dart';
 
+// Método para convertir los datos de la fila a la entidad
 SyncMetadata _toSyncMetadata(String id, DateTime updatedAt, bool pendingSync) {
   return SyncMetadata(id: id, updatedAt: updatedAt, pendingSync: pendingSync);
 }
 
+// Método para convertir los datos de la fila de productos a la entidad
 ProductEntity mapProductRow(ProductRow row) {
   return ProductEntity(
     id: row.id,
@@ -20,6 +22,7 @@ ProductEntity mapProductRow(ProductRow row) {
   );
 }
 
+// Método para convertir la entidad de productos a la fila
 ProductRowsCompanion mapProductEntity(ProductEntity entity) {
   return ProductRowsCompanion(
     id: Value(entity.id),
@@ -34,6 +37,7 @@ ProductRowsCompanion mapProductEntity(ProductEntity entity) {
   );
 }
 
+// Método para convertir los datos de la fila de ubicaciones a la entidad
 LocationEntity mapLocationRow(LocationRow row) {
   return LocationEntity(
     id: row.id,
@@ -44,6 +48,7 @@ LocationEntity mapLocationRow(LocationRow row) {
   );
 }
 
+// Método para convertir la entidad de ubicaciones a la fila
 LocationRowsCompanion mapLocationEntity(LocationEntity entity) {
   return LocationRowsCompanion(
     id: Value(entity.id),
@@ -55,6 +60,7 @@ LocationRowsCompanion mapLocationEntity(LocationEntity entity) {
   );
 }
 
+// Método para convertir los datos de la fila de empleados a la entidad
 EmployeeEntity mapEmployeeRow(EmployeeRow row) {
   return EmployeeEntity(
     id: row.id,
@@ -67,6 +73,7 @@ EmployeeEntity mapEmployeeRow(EmployeeRow row) {
   );
 }
 
+// Método para convertir la entidad de empleados a la fila
 EmployeeRowsCompanion mapEmployeeEntity(EmployeeEntity entity) {
   return EmployeeRowsCompanion(
     id: Value(entity.id),
@@ -80,6 +87,7 @@ EmployeeRowsCompanion mapEmployeeEntity(EmployeeEntity entity) {
   );
 }
 
+// Método para convertir los datos de la fila de snapshots a la entidad
 InventorySnapshotEntity mapSnapshotRow(InventorySnapshotRow row) {
   return InventorySnapshotEntity(
     id: row.id,
@@ -91,6 +99,7 @@ InventorySnapshotEntity mapSnapshotRow(InventorySnapshotRow row) {
   );
 }
 
+// Método para convertir la entidad de snapshots a la fila
 InventorySnapshotRowsCompanion mapSnapshotEntity(InventorySnapshotEntity entity) {
   return InventorySnapshotRowsCompanion(
     id: Value(entity.id),
@@ -102,6 +111,7 @@ InventorySnapshotRowsCompanion mapSnapshotEntity(InventorySnapshotEntity entity)
   );
 }
 
+// Método para convertir los datos de la fila de transacciones a la entidad
 InventoryTransactionEntity mapTransactionRow(InventoryTransactionRow row) {
   return InventoryTransactionEntity(
     id: row.id,
@@ -118,6 +128,7 @@ InventoryTransactionEntity mapTransactionRow(InventoryTransactionRow row) {
   );
 }
 
+// Método para convertir la entidad de transacciones a la fila
 InventoryTransactionRowsCompanion mapTransactionEntity(InventoryTransactionEntity entity) {
   return InventoryTransactionRowsCompanion(
     id: Value(entity.id),
@@ -135,6 +146,7 @@ InventoryTransactionRowsCompanion mapTransactionEntity(InventoryTransactionEntit
   );
 }
 
+// Método para convertir los datos de la fila de estado de sincronización a la entidad
 SyncStatusEntity mapSyncStatusRow(SyncStatusRow row) {
   return SyncStatusEntity(
     resource: SyncResourceX.fromValue(row.resource),
@@ -142,6 +154,7 @@ SyncStatusEntity mapSyncStatusRow(SyncStatusRow row) {
   );
 }
 
+// Método para convertir la entidad de estado de sincronización a la fila
 SyncStatusesCompanion mapSyncStatusEntity(SyncStatusEntity entity) {
   return SyncStatusesCompanion(
     resource: Value(entity.resource.value),

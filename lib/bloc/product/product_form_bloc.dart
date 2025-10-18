@@ -7,6 +7,9 @@ import 'package:inventario_final/models/entities.dart';
 import 'package:inventario_final/models/enums.dart';
 import 'package:uuid/uuid.dart';
 
+// Clase ProductFormBloc que sirve para manejar el estado de la forma de producto
+// Se encarga de manejar el estado de la forma de producto y de las acciones de sincronización
+// También se encarga de manejar el estado de la aplicación y de las acciones de sincronización
 class ProductFormBloc extends Bloc<ProductFormEvent, ProductFormState> {
   ProductFormBloc({
     required InventoryRepository repository,
@@ -33,6 +36,7 @@ class ProductFormBloc extends Bloc<ProductFormEvent, ProductFormState> {
   final AuthRepository _authRepository;
   final Uuid _uuid;
 
+  // Método para manejar el evento de inicialización
   Future<void> _onInitialized(
     ProductFormInitialized event,
     Emitter<ProductFormState> emit,
@@ -75,42 +79,52 @@ class ProductFormBloc extends Bloc<ProductFormEvent, ProductFormState> {
     }
   }
 
+  // Método para manejar el evento de cambio de nombre
   void _onNameChanged(ProductFormNameChanged event, Emitter<ProductFormState> emit) {
     emit(state.copyWith(name: event.name));
   }
 
+  // Método para manejar el evento de cambio de SKU
   void _onSkuChanged(ProductFormSkuChanged event, Emitter<ProductFormState> emit) {
     emit(state.copyWith(sku: event.sku));
   }
 
+  // Método para manejar el evento de cambio de categoría
   void _onCategoryChanged(ProductFormCategoryChanged event, Emitter<ProductFormState> emit) {
     emit(state.copyWith(category: event.category));
   }
 
+  // Método para manejar el evento de cambio de unidad
   void _onUnitChanged(ProductFormUnitChanged event, Emitter<ProductFormState> emit) {
     emit(state.copyWith(unit: event.unit));
   }
 
+  // Método para manejar el evento de cambio de precio
   void _onPriceChanged(ProductFormPriceChanged event, Emitter<ProductFormState> emit) {
     emit(state.copyWith(price: event.price));
   }
 
+  // Método para manejar el evento de cambio de ubicación
   void _onLocationChanged(ProductFormLocationChanged event, Emitter<ProductFormState> emit) {
     emit(state.copyWith(locationId: event.locationId));
   }
 
+  // Método para manejar el evento de cambio de stock inicial
   void _onInitialStockChanged(ProductFormInitialStockChanged event, Emitter<ProductFormState> emit) {
     emit(state.copyWith(initialStock: event.stock));
   }
 
+  // Método para manejar el evento de cambio de imagen
   void _onImageChanged(ProductFormImageChanged event, Emitter<ProductFormState> emit) {
     emit(state.copyWith(imagePath: event.imagePath));
   }
 
+  // Método para manejar el evento de cambio de estado activo
   void _onActiveToggled(ProductFormActiveToggled event, Emitter<ProductFormState> emit) {
     emit(state.copyWith(active: event.active));
   }
 
+  // Método para manejar el evento de envío
   Future<void> _onSubmitted(
     ProductFormSubmitted event,
     Emitter<ProductFormState> emit,

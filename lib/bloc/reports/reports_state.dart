@@ -3,6 +3,7 @@ import 'package:inventario_final/models/entities.dart';
 
 enum ReportsStatus { initial, loading, success, failure }
 
+// Clase ReportsState que sirve para manejar el estado de los reportes
 class ReportsState extends Equatable {
   const ReportsState({
     this.status = ReportsStatus.initial,

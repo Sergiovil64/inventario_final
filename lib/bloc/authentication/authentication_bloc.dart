@@ -4,6 +4,9 @@ import 'package:inventario_final/bloc/authentication/authentication_event.dart';
 import 'package:inventario_final/bloc/authentication/authentication_state.dart';
 import 'package:inventario_final/data/repositories/auth_repository.dart';
 
+// Clase AuthenticationBloc que sirve para manejar el estado de autenticación del usuario
+// Se encarga de manejar el estado de autenticación del usuario y de las acciones de login, register, logout y cambio de ubicación
+// También se encarga de manejar el estado de la aplicación y de las acciones de sincronización
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc({required AuthRepository repository})
@@ -18,6 +21,7 @@ class AuthenticationBloc
 
   final AuthRepository _repository;
 
+  // Método para manejar el evento de inicio de la aplicación
   Future<void> _onStarted(
     AuthenticationStarted event,
     Emitter<AuthenticationState> emit,
@@ -31,6 +35,7 @@ class AuthenticationBloc
     }
   }
 
+  // Método para manejar el evento de login
   Future<void> _onLoginRequested(
     AuthenticationLoginRequested event,
     Emitter<AuthenticationState> emit,
@@ -44,6 +49,7 @@ class AuthenticationBloc
     }
   }
 
+  // Método para manejar el evento de registro
   Future<void> _onRegisterRequested(
     AuthenticationRegisterRequested event,
     Emitter<AuthenticationState> emit,
@@ -63,6 +69,7 @@ class AuthenticationBloc
     }
   }
 
+  // Método para manejar el evento de logout
   Future<void> _onLogoutRequested(
     AuthenticationLogoutRequested event,
     Emitter<AuthenticationState> emit,
@@ -71,6 +78,7 @@ class AuthenticationBloc
     emit(const AuthenticationState.unauthenticated());
   }
 
+  // Método para manejar el evento de cambio de ubicación
   Future<void> _onLocationChanged(
     AuthenticationLocationChanged event,
     Emitter<AuthenticationState> emit,

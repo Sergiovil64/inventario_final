@@ -3,6 +3,7 @@ import 'package:inventario_final/models/entities.dart';
 
 enum InventoryOverviewStatus { initial, loading, success, failure }
 
+// Clase InventoryOverviewState que sirve para manejar el estado de inventario
 class InventoryOverviewState extends Equatable {
   const InventoryOverviewState({
     this.status = InventoryOverviewStatus.initial,
@@ -22,6 +23,7 @@ class InventoryOverviewState extends Equatable {
   final String? selectedLocationId;
   final String? errorMessage;
 
+  // Método para copiar el estado
   InventoryOverviewState copyWith({
     InventoryOverviewStatus? status,
     List<ProductEntity>? products,

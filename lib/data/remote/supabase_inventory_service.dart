@@ -3,12 +3,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:inventario_final/models/entities.dart';
 import 'package:inventario_final/models/enums.dart';
 
+// Clase SupabaseInventoryService que sirve para manejar el servicio de inventario de Supabase
 class SupabaseInventoryService {
   SupabaseInventoryService({SupabaseClient? client})
       : _client = client ?? Supabase.instance.client;
 
   final SupabaseClient _client;
 
+  // Método para obtener los productos
   Future<List<ProductEntity>> fetchProducts({DateTime? updatedAfter}) async {
     return _fetchEntities<ProductEntity>(
       table: 'products',
@@ -17,6 +19,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para upsertar los productos
   Future<List<ProductEntity>> upsertProducts(List<ProductEntity> entities) async {
     if (entities.isEmpty) return const [];
     final rows = entities.map(_productToMap).toList();
@@ -27,6 +30,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para obtener las ubicaciones
   Future<List<LocationEntity>> fetchLocations({DateTime? updatedAfter}) async {
     return _fetchEntities<LocationEntity>(
       table: 'locations',
@@ -35,6 +39,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para upsertar las ubicaciones
   Future<List<LocationEntity>> upsertLocations(List<LocationEntity> entities) async {
     if (entities.isEmpty) return const [];
     final rows = entities.map(_locationToMap).toList();
@@ -45,6 +50,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para obtener los empleados
   Future<List<EmployeeEntity>> fetchEmployees({DateTime? updatedAfter}) async {
     return _fetchEntities<EmployeeEntity>(
       table: 'employees',
@@ -53,6 +59,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para upsertar los empleados
   Future<List<EmployeeEntity>> upsertEmployees(List<EmployeeEntity> entities) async {
     if (entities.isEmpty) return const [];
     final rows = entities.map(_employeeToMap).toList();
@@ -63,6 +70,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para obtener los snapshots
   Future<List<InventorySnapshotEntity>> fetchSnapshots({DateTime? updatedAfter}) async {
     return _fetchEntities<InventorySnapshotEntity>(
       table: 'inventory_snapshots',
@@ -71,6 +79,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para upsertar los snapshots
   Future<List<InventorySnapshotEntity>> upsertSnapshots(
     List<InventorySnapshotEntity> entities,
   ) async {
@@ -83,6 +92,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para obtener las transacciones
   Future<List<InventoryTransactionEntity>> fetchTransactions({DateTime? updatedAfter}) async {
     return _fetchEntities<InventoryTransactionEntity>(
       table: 'inventory_transactions',
@@ -91,6 +101,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para upsertar las transacciones
   Future<List<InventoryTransactionEntity>> upsertTransactions(
     List<InventoryTransactionEntity> entities,
   ) async {
@@ -103,6 +114,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para obtener las entidades
   Future<List<T>> _fetchEntities<T>({
     required String table,
     required T Function(Map<String, dynamic>) mapper,
@@ -117,6 +129,7 @@ class SupabaseInventoryService {
     return data.map(mapper).toList();
   }
 
+  // Método para upsertar las entidades
   Future<List<T>> _upsertEntities<T>({
     required String table,
     required List<Map<String, dynamic>> rows,
@@ -130,6 +143,7 @@ class SupabaseInventoryService {
     return data.map(mapper).toList();
   }
 
+  // Método para convertir los datos de la fila de productos a la entidad
   static ProductEntity _productFromMap(Map<String, dynamic> row) {
     return ProductEntity(
       id: row['id'].toString(),
@@ -143,6 +157,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para convertir la entidad de productos a la fila
   static Map<String, dynamic> _productToMap(ProductEntity entity) {
     return {
       'id': entity.id,
@@ -156,6 +171,7 @@ class SupabaseInventoryService {
     };
   }
 
+  // Método para convertir los datos de la fila de ubicaciones a la entidad
   static LocationEntity _locationFromMap(Map<String, dynamic> row) {
     return LocationEntity(
       id: row['id'].toString(),
@@ -166,6 +182,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para convertir la entidad de ubicaciones a la fila
   static Map<String, dynamic> _locationToMap(LocationEntity entity) {
     return {
       'id': entity.id,
@@ -176,6 +193,7 @@ class SupabaseInventoryService {
     };
   }
 
+  // Método para convertir los datos de la fila de empleados a la entidad
   static EmployeeEntity _employeeFromMap(Map<String, dynamic> row) {
     return EmployeeEntity(
       id: row['id'].toString(),
@@ -188,6 +206,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para convertir la entidad de empleados a la fila
   static Map<String, dynamic> _employeeToMap(EmployeeEntity entity) {
     return {
       'id': entity.id,
@@ -200,6 +219,7 @@ class SupabaseInventoryService {
     };
   }
 
+  // Método para convertir los datos de la fila de snapshots a la entidad
   static InventorySnapshotEntity _snapshotFromMap(Map<String, dynamic> row) {
     return InventorySnapshotEntity(
       id: row['id'].toString(),
@@ -211,6 +231,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para convertir la entidad de snapshots a la fila
   static Map<String, dynamic> _snapshotToMap(InventorySnapshotEntity entity) {
     return {
       'id': entity.id,
@@ -221,6 +242,7 @@ class SupabaseInventoryService {
     };
   }
 
+  // Método para convertir los datos de la fila de transacciones a la entidad
   static InventoryTransactionEntity _transactionFromMap(Map<String, dynamic> row) {
     return InventoryTransactionEntity(
       id: row['id'].toString(),
@@ -237,6 +259,7 @@ class SupabaseInventoryService {
     );
   }
 
+  // Método para convertir la entidad de transacciones a la fila
   static Map<String, dynamic> _transactionToMap(InventoryTransactionEntity entity) {
     return {
       'id': entity.id,
@@ -253,6 +276,7 @@ class SupabaseInventoryService {
     };
   }
 
+  // Método para convertir los datos de la fila de estado de sincronización a la entidad
   static SyncMetadata _syncMetadata(String id, dynamic updatedAt) {
     return SyncMetadata(
       id: id,

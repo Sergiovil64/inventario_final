@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:inventario_final/models/enums.dart';
 
+// Clase TransactionFormEvent que sirve para manejar los eventos de la forma de transacción
 abstract class TransactionFormEvent extends Equatable {
   const TransactionFormEvent();
 
@@ -8,10 +9,12 @@ abstract class TransactionFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+// Método para manejar el evento de inicialización
 class TransactionFormInitialized extends TransactionFormEvent {
   const TransactionFormInitialized();
 }
 
+// Método para manejar el evento de cambio de producto
 class TransactionFormProductChanged extends TransactionFormEvent {
   const TransactionFormProductChanged(this.productId);
 

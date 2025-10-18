@@ -3,6 +3,7 @@ import 'package:inventario_final/models/entities.dart';
 
 enum AuthenticationStatus { unknown, loading, authenticated, unauthenticated, failure }
 
+// Clase AuthenticationState que sirve para manejar el estado de autenticación del usuario
 class AuthenticationState extends Equatable {
   const AuthenticationState._({
     required this.status,

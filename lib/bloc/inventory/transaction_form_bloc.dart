@@ -6,6 +6,9 @@ import 'package:inventario_final/models/entities.dart';
 import 'package:inventario_final/bloc/inventory/transaction_form_event.dart';
 import 'package:inventario_final/bloc/inventory/transaction_form_state.dart';
 
+// Clase TransactionFormBloc que sirve para manejar el estado de la forma de transacción
+// Se encarga de manejar el estado de la forma de transacción y de las acciones de sincronización
+// También se encarga de manejar el estado de la aplicación y de las acciones de sincronización
 class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormState> {
   TransactionFormBloc({
     required InventoryRepository repository,
@@ -31,6 +34,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
   final AuthRepository _authRepository;
   final Uuid _uuid;
 
+  // Método para manejar el evento de inicialización
   Future<void> _onInitialized(
     TransactionFormInitialized event,
     Emitter<TransactionFormState> emit,
@@ -55,6 +59,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     }
   }
 
+  // Método para manejar el evento de cambio de producto
   void _onProductChanged(
     TransactionFormProductChanged event,
     Emitter<TransactionFormState> emit,
@@ -62,6 +67,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     emit(state.copyWith(productId: event.productId));
   }
 
+  // Método para manejar el evento de cambio de ubicación de origen
   void _onSourceChanged(
     TransactionFormSourceChanged event,
     Emitter<TransactionFormState> emit,
@@ -69,6 +75,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     emit(state.copyWith(sourceLocationId: event.locationId));
   }
 
+  // Método para manejar el evento de cambio de ubicación de destino
   void _onTargetChanged(
     TransactionFormTargetChanged event,
     Emitter<TransactionFormState> emit,
@@ -76,6 +83,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     emit(state.copyWith(targetLocationId: event.locationId));
   }
 
+  // Método para manejar el evento de cambio de cantidad
   void _onQuantityChanged(
     TransactionFormQuantityChanged event,
     Emitter<TransactionFormState> emit,
@@ -83,6 +91,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     emit(state.copyWith(quantity: event.quantity));
   }
 
+  // Método para manejar el evento de cambio de tipo de transacción
   void _onTypeChanged(
     TransactionFormTypeChanged event,
     Emitter<TransactionFormState> emit,
@@ -90,6 +99,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     emit(state.copyWith(transactionType: event.transactionType));
   }
 
+  // Método para manejar el evento de cambio de referencia
   void _onReferenceChanged(
     TransactionFormReferenceChanged event,
     Emitter<TransactionFormState> emit,
@@ -97,6 +107,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     emit(state.copyWith(reference: event.reference));
   }
 
+  // Método para manejar el evento de cambio de nota
   void _onNoteChanged(
     TransactionFormNoteChanged event,
     Emitter<TransactionFormState> emit,
@@ -104,6 +115,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     emit(state.copyWith(note: event.note));
   }
 
+  // Método para manejar el evento de cambio de empleado
   void _onEmployeeChanged(
     TransactionFormEmployeeChanged event,
     Emitter<TransactionFormState> emit,
@@ -111,6 +123,7 @@ class TransactionFormBloc extends Bloc<TransactionFormEvent, TransactionFormStat
     emit(state.copyWith(employeeId: event.employeeId));
   }
 
+  // Método para manejar el evento de envío
   Future<void> _onSubmitted(
     TransactionFormSubmitted event,
     Emitter<TransactionFormState> emit,

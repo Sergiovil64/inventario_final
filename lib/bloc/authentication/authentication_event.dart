@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+// Clase AuthenticationEvent que sirve para manejar los eventos de autenticación
 abstract class AuthenticationEvent extends Equatable {
   const AuthenticationEvent();
 

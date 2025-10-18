@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 
 part 'local_database.g.dart';
 
+// Clase ProductRows que sirve para manejar las filas de productos
 class ProductRows extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();
@@ -23,6 +24,7 @@ class ProductRows extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+// Clase LocationRows que sirve para manejar las filas de ubicaciones
 class LocationRows extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();
@@ -35,6 +37,7 @@ class LocationRows extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+// Clase EmployeeRows que sirve para manejar las filas de empleados
 class EmployeeRows extends Table {
   TextColumn get id => text()();
   TextColumn get firstName => text()();
@@ -49,6 +52,7 @@ class EmployeeRows extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+// Clase InventorySnapshotRows que sirve para manejar las filas de snapshots
 class InventorySnapshotRows extends Table {
   TextColumn get id => text()();
   TextColumn get productId => text().references(ProductRows, #id)();
@@ -61,6 +65,7 @@ class InventorySnapshotRows extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+// Clase InventoryTransactionRows que sirve para manejar las filas de transacciones
 class InventoryTransactionRows extends Table {
   TextColumn get id => text()();
   TextColumn get productId => text().references(ProductRows, #id)();
@@ -81,6 +86,7 @@ class InventoryTransactionRows extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+// Clase SyncStatuses que sirve para manejar las filas de estado de sincronización
 @DataClassName('SyncStatusRow')
 class SyncStatuses extends Table {
   TextColumn get resource => text()();
@@ -90,6 +96,7 @@ class SyncStatuses extends Table {
   Set<Column> get primaryKey => {resource};
 }
 
+// Clase LocalDatabase que sirve para manejar la base de datos local
 @DriftDatabase(tables: [
   ProductRows,
   LocationRows,
@@ -105,6 +112,7 @@ class LocalDatabase extends _$LocalDatabase {
   int get schemaVersion => 1;
 }
 
+// Método para abrir la conexión a la base de datos
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final directory = await getApplicationDocumentsDirectory();

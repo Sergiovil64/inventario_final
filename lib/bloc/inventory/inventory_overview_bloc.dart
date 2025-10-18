@@ -5,7 +5,9 @@ import 'package:inventario_final/bloc/inventory/inventory_overview_state.dart';
 import 'package:inventario_final/data/repositories/inventory_repository.dart';
 import 'package:inventario_final/models/entities.dart';
 
-
+// Clase InventoryOverviewBloc que sirve para manejar el estado de inventario
+// Se encarga de manejar el estado de inventario y de las acciones de sincronización
+// También se encarga de manejar el estado de la aplicación y de las acciones de sincronización
 class InventoryOverviewBloc
     extends Bloc<InventoryOverviewEvent, InventoryOverviewState> {
   InventoryOverviewBloc(this._repository) : super(const InventoryOverviewState()) {
@@ -21,6 +23,7 @@ class InventoryOverviewBloc
   StreamSubscription<List<LocationEntity>>? _locationSubscription;
   StreamSubscription<List<InventorySnapshotEntity>>? _snapshotSubscription;
 
+  // Método para manejar el evento de subscripción
   Future<void> _onSubscriptionRequested(
     InventoryOverviewSubscriptionRequested event,
     Emitter<InventoryOverviewState> emit,
@@ -51,6 +54,7 @@ class InventoryOverviewBloc
     return super.close();
   }
 
+  // Método para manejar el evento de actualización de productos
   void _onProductsUpdated(
     InventoryOverviewProductsUpdated event,
     Emitter<InventoryOverviewState> emit,
@@ -58,6 +62,7 @@ class InventoryOverviewBloc
     emit(state.copyWith(products: event.products));
   }
 
+  // Método para manejar el evento de actualización de ubicaciones
   void _onLocationsUpdated(
     InventoryOverviewLocationsUpdated event,
     Emitter<InventoryOverviewState> emit,
@@ -65,6 +70,7 @@ class InventoryOverviewBloc
     emit(state.copyWith(locations: event.locations));
   }
 
+  // Método para manejar el evento de actualización de snapshots
   void _onSnapshotsUpdated(
     InventoryOverviewSnapshotsUpdated event,
     Emitter<InventoryOverviewState> emit,
@@ -72,6 +78,7 @@ class InventoryOverviewBloc
     _recalculateInventory(event.snapshots, emit);
   }
 
+  // Método para manejar el evento de cambio de ubicación
   void _onLocationChanged(
     InventoryOverviewLocationChanged event,
     Emitter<InventoryOverviewState> emit,
@@ -80,6 +87,7 @@ class InventoryOverviewBloc
     _recalculateInventory(state.snapshots, emit);
   }
 
+  // Método para recalcular el inventario
   void _recalculateInventory(
     List<InventorySnapshotEntity> snapshots,
     Emitter<InventoryOverviewState> emit,
